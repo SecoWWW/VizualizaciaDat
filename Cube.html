@@ -17,19 +17,34 @@
 </head>
 
 <body>
-	<script src="js/three.js"></script>
+	<script src="node_modules/three/build/three.min.js"></script>
+	<script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
+	<!-- <script src="js/three.js"></script> -->
+	<!-- <script src="js/ThreeInspector.js"></script> -->
+
+
+
 	<script>
 		var scene = new THREE.Scene();
 		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 		var renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
+		renderer.setSize(window.innerWidth*0.8 , window.innerHeight*0.8 );
 		document.body.appendChild(renderer.domElement);
 
 		var geometry = new THREE.BoxGeometry(1, 1, 1);
 		var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 		var cube = new THREE.Mesh(geometry, material);
 		scene.add(cube);
+
+		var params = {
+			loadFile: function () {
+				document.getElementById('myInput').click();
+			}
+		};
+		var gui = new dat.GUI();
+		gui.add(params, 'loadFile').name('Load CSV file');
+
 
 		camera.position.z = 5;
 		function animate() {
@@ -43,6 +58,8 @@
 
 
 	</script>
+
+	<input id="myInput" type="file" style="visibility:hidden" />
 </body>
 
 </html>
