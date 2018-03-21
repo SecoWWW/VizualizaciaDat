@@ -1,0 +1,23 @@
+{
+  "name": "vizualizaciadat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SecoWWW/VizualizaciaDat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SecoWWW/VizualizaciaDat/issues"
+  },
+  "homepage": "https://github.com/SecoWWW/VizualizaciaDat#readme",
+  "dependencies": {
+    "dat.gui": "^0.7.1",
+    "three": "^0.91.0"
+  }
+}
