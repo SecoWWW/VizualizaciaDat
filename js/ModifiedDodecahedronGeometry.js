@@ -1,29 +1,6 @@
 import { Geometry } from '../node_modules/three/src/core/Geometry.js';
 import { PolyhedronBufferGeometry } from '../node_modules/three/src/geometries/PolyhedronGeometry.js';
 
-// DodecahedronGeometry
-
-THREE.ModifiedDodecahedronGeometry = function(radius, detail) {
-
-    Geometry.call(this);
-
-    this.type = 'DodecahedronGeometry';
-
-    this.parameters = {
-        radius: radius,
-        detail: detail
-    };
-
-    this.fromBufferGeometry(new DodecahedronBufferGeometry(radius, detail));
-    this.mergeVertices();
-
-}
-
-DodecahedronGeometry.prototype = Object.create(Geometry.prototype);
-DodecahedronGeometry.prototype.constructor = DodecahedronGeometry;
-
-// DodecahedronBufferGeometry
-
 ModifiedDodecahedronBufferGeometry = function(radius, detail) {
 
     var t = (1 + Math.sqrt(5)) / 2;

@@ -20,6 +20,7 @@
     <script src="node_modules/three/build/three.min.js"></script>
     <script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
     <script src="js/OrbitControls.js"></script>
+    <script src="js/scripts.js"></script>
     <!-- <script src="js/ModifiedDodecahedronGeometry.js"></script> -->
     <!-- <script src="js/three.js"></script> -->
     <!-- <script src="js/ThreeInspector.js"></script> -->
@@ -37,21 +38,9 @@
 
         // var geometry = new THREE.BoxGeometry(1, 1, 1);
         // var geometry = new ModifiedDodecahedronGeometry(5, 0);
-        var verticesOfCube = [-1, -1, -1,
-            1, -1, -1,
-            1, 1, -1, -1, 1, -1, -1, -1, 1,
-            1, -1, 1,
-            1, 1, 1, -1, 1, 1
-        ];
+        var verticesOfCube = createVerticies();
 
-        var indicesOfFaces = [
-            2, 1, 0, 0, 3, 2,
-            0, 4, 7, 7, 3, 0,
-            0, 1, 5, 5, 4, 0,
-            1, 2, 6, 6, 5, 1,
-            2, 3, 7, 7, 6, 2,
-            4, 5, 6, 6, 7, 4
-        ];
+        var indicesOfFaces = createIndicies();
 
         var geometry = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 2, 0);
         var material = new THREE.MeshBasicMaterial({
