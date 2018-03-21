@@ -34,19 +34,19 @@ function createVerticies() {
 
 function createIndicies() {
     var indices = [
-        // 16, 0, 12,
-        // 12, 2, 17,
-        // 12, 17, 16
+        16, 0, 12,
+        12, 2, 17,
+        12, 17, 16,
         // 17, 12, 16, - wrong direction
         
 
         0, 16, 1,
-        // 0, 8, 9,
+        0, 8, 9,
         9, 0, 1,
 
-        // 0, 8, 4,
-        // 0, 12, 14,
-        // 0, 14, 4
+        0, 8, 4,
+        0, 12, 14,
+        0, 14, 4
     ];
     return indices;
 }
