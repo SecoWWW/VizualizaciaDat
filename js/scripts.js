@@ -42,3 +42,14 @@ function createIndicies() {
     ];
     return indices;
 }
+
+function addCenterOfVerticies() {
+    sx = sy = sz = 0
+    for i in 1..n:
+        sx = sx + px[i]
+    sy = sy + py[i]
+    sz = sz + pz[i]
+    cx = sx / n
+    cy = sy / n
+    cz = sz / n
+}
