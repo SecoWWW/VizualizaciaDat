@@ -11,10 +11,10 @@ function createVerticies() {
         -1,-1,1,
         -1,-1,-1,        
 
-        0,reverse,theta,
-        0,reverse,-theta,
-        0,-reverse,theta,
-        0,-reverse,-theta,
+        0,theta,reverse,
+        0,theta,-reverse,
+        0,-theta,reverse,
+        0,-theta,-reverse,
 
         reverse,0,theta,
         reverse,0,-theta,
