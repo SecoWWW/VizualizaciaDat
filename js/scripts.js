@@ -32,6 +32,14 @@ function createVerticies() {
     return vertices;
 }
 
+function newVertices(geometry){
+    geometry.vertices.push(
+        new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[2].x+geometry.vertices[12].x+geometry.vertices[16].x+geometry.vertices[17].x)/5,
+                            (geometry.vertices[0].y+geometry.vertices[2].y+geometry.vertices[12].y+geometry.vertices[16].y+geometry.vertices[17].y)/5,
+                            (geometry.vertices[0].z+geometry.vertices[2].z+geometry.vertices[12].z+geometry.vertices[16].z+geometry.vertices[17].z)/5)
+    )
+}
+
 function createGeometry() {
     var theta = (1 + Math.sqrt(5)) / 2;
     var reverse = 1 / theta;
@@ -39,33 +47,44 @@ function createGeometry() {
     var geometry = new THREE.Geometry();    
 
     geometry.vertices.push(
-        new THREE.Vector3(1,1,1),
-        new THREE.Vector3(1,1,-1),
-        new THREE.Vector3(1,-1,1),
-        new THREE.Vector3(1,-1,-1),
-        new THREE.Vector3(-1,1,1),
-        new THREE.Vector3(-1,1,-1),
-        new THREE.Vector3(-1,-1,1),
-        new THREE.Vector3(-1,-1,-1),
-        new THREE.Vector3(0, theta, reverse),
-        new THREE.Vector3(0, theta, -reverse),
-        new THREE.Vector3(0, -theta, reverse),
-        new THREE.Vector3(0, -theta, -reverse),
-        new THREE.Vector3(reverse, 0, theta),
-        new THREE.Vector3(reverse, 0, -theta),
-        new THREE.Vector3(-reverse, 0, theta),
-        new THREE.Vector3(-reverse, 0, -theta),
-        new THREE.Vector3(theta, reverse, 0),
-        new THREE.Vector3(theta, -reverse, 0),
-        new THREE.Vector3(-theta, reverse, 0),
-        new THREE.Vector3(-theta, -reverse, 0)
+        new THREE.Vector3(1,1,1),//0
+        new THREE.Vector3(1,1,-1),//1
+        new THREE.Vector3(1,-1,1),//2
+        new THREE.Vector3(1,-1,-1),//3
+        new THREE.Vector3(-1,1,1),//4
+        new THREE.Vector3(-1,1,-1),//5
+        new THREE.Vector3(-1,-1,1),//6
+        new THREE.Vector3(-1,-1,-1),//7
+        new THREE.Vector3(0, theta, reverse),//8
+        new THREE.Vector3(0, theta, -reverse),//9
+        new THREE.Vector3(0, -theta, reverse),//10
+        new THREE.Vector3(0, -theta, -reverse),//11
+        new THREE.Vector3(reverse, 0, theta),//12
+        new THREE.Vector3(reverse, 0, -theta),//13
+        new THREE.Vector3(-reverse, 0, theta),//14
+        new THREE.Vector3(-reverse, 0, -theta),//15
+        new THREE.Vector3(theta, reverse, 0),//16
+        new THREE.Vector3(theta, -reverse, 0),//17
+        new THREE.Vector3(-theta, reverse, 0),//18
+        new THREE.Vector3(-theta, -reverse, 0)//19
     );
+
+    newVertices(geometry);
+    for(var i = 0; i < geometry.vertices.length; i++){
+        console.log(geometry.vertices[i].x+" "+geometry.vertices[i].y+" "+geometry.vertices[i].z);
+    }
+
 
     geometry.faces.push(
         //first face
-        new THREE.Face3(16, 0, 12),
-        new THREE.Face3(12, 2, 17),
-        new THREE.Face3(12, 17, 16),
+        // new THREE.Face3(16, 0, 12),
+        // new THREE.Face3(12, 2, 17),
+        // new THREE.Face3(12, 17, 16),
+        new THREE.Face3(0, 12, 20),
+        new THREE.Face3(12, 2, 20),
+        new THREE.Face3(2, 17, 20),
+        new THREE.Face3(17, 16, 20),
+        new THREE.Face3(16, 0, 20),
         //second face
         new THREE.Face3(0, 16, 1),
         new THREE.Face3(8, 0, 9),
