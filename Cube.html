@@ -38,21 +38,21 @@
 
         // var geometry = new THREE.BoxGeometry(1, 1, 1);
         // var geometry = new ModifiedDodecahedronGeometry(5, 0);
-        var verticesOfCube = createVerticies();
+        // var verticesOfCube = createVerticies();
+        // var indicesOfFaces = createIndicies();
+        // var geometry = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 1, 0);
 
-        var indicesOfFaces = createIndicies();
-
-        var geometry = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 1, 0);
+        var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
             color: 0x00ff00
-        });
-        // var cube = new THREE.Mesh(geometry, material);
+        });        
         var polyhedron = new THREE.Mesh(geometry, material);
-        // scene.add(cube);
+        console.log("Polyhedron");        
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
+        var wireframeMaterial = new THREE.LineBasicMaterial({color: 0xff0000});        
 
-        var line = new THREE.LineSegments(wireframe);
+        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         scene.add(line);
 
         var params = {
