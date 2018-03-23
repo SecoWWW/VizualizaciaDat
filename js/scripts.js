@@ -36,8 +36,12 @@ function newVertices(geometry){
     geometry.vertices.push(
         new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[2].x+geometry.vertices[12].x+geometry.vertices[16].x+geometry.vertices[17].x)/5,
                             (geometry.vertices[0].y+geometry.vertices[2].y+geometry.vertices[12].y+geometry.vertices[16].y+geometry.vertices[17].y)/5,
-                            (geometry.vertices[0].z+geometry.vertices[2].z+geometry.vertices[12].z+geometry.vertices[16].z+geometry.vertices[17].z)/5)
-    )
+                            (geometry.vertices[0].z+geometry.vertices[2].z+geometry.vertices[12].z+geometry.vertices[16].z+geometry.vertices[17].z)/5),
+        new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[8].x+geometry.vertices[9].x+geometry.vertices[1].x+geometry.vertices[16].x)/5,
+                            (geometry.vertices[0].y+geometry.vertices[8].y+geometry.vertices[9].y+geometry.vertices[1].y+geometry.vertices[16].y)/5,
+                            (geometry.vertices[0].z+geometry.vertices[8].z+geometry.vertices[9].z+geometry.vertices[1].z+geometry.vertices[16].z)/5),
+
+    );
 }
 
 function createGeometry() {
@@ -86,9 +90,14 @@ function createGeometry() {
         new THREE.Face3(17, 16, 20),
         new THREE.Face3(16, 0, 20),
         //second face
-        new THREE.Face3(0, 16, 1),
-        new THREE.Face3(8, 0, 9),
-        new THREE.Face3(9, 0, 1),
+        // new THREE.Face3(0, 16, 1),
+        // new THREE.Face3(8, 0, 9),
+        // new THREE.Face3(9, 0, 1),
+        new THREE.Face3(8, 0, 21),
+        new THREE.Face3(9, 8, 21),
+        new THREE.Face3(1, 9, 21),
+        new THREE.Face3(16, 1, 21),
+        new THREE.Face3(0, 16, 21),
         //third face
         new THREE.Face3(0, 8, 4),
         new THREE.Face3(14, 12, 0),
