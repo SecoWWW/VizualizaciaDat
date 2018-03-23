@@ -34,13 +34,54 @@ function createVerticies() {
 
 function newVertices(geometry){
     geometry.vertices.push(
+        //1
         new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[2].x+geometry.vertices[12].x+geometry.vertices[16].x+geometry.vertices[17].x)/5,
                             (geometry.vertices[0].y+geometry.vertices[2].y+geometry.vertices[12].y+geometry.vertices[16].y+geometry.vertices[17].y)/5,
                             (geometry.vertices[0].z+geometry.vertices[2].z+geometry.vertices[12].z+geometry.vertices[16].z+geometry.vertices[17].z)/5),
+        //2
         new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[8].x+geometry.vertices[9].x+geometry.vertices[1].x+geometry.vertices[16].x)/5,
                             (geometry.vertices[0].y+geometry.vertices[8].y+geometry.vertices[9].y+geometry.vertices[1].y+geometry.vertices[16].y)/5,
                             (geometry.vertices[0].z+geometry.vertices[8].z+geometry.vertices[9].z+geometry.vertices[1].z+geometry.vertices[16].z)/5),
-
+        //3
+        new THREE.Vector3(  (geometry.vertices[0].x+geometry.vertices[8].x+geometry.vertices[4].x+geometry.vertices[12].x+geometry.vertices[14].x)/5,
+                            (geometry.vertices[0].y+geometry.vertices[8].y+geometry.vertices[4].y+geometry.vertices[12].y+geometry.vertices[14].y)/5,
+                            (geometry.vertices[0].z+geometry.vertices[8].z+geometry.vertices[4].z+geometry.vertices[12].z+geometry.vertices[14].z)/5),
+        //4
+        new THREE.Vector3(  (geometry.vertices[4].x+geometry.vertices[6].x+geometry.vertices[19].x+geometry.vertices[14].x+geometry.vertices[18].x)/5,
+                            (geometry.vertices[4].y+geometry.vertices[6].y+geometry.vertices[19].y+geometry.vertices[14].y+geometry.vertices[18].y)/5,
+                            (geometry.vertices[4].z+geometry.vertices[6].z+geometry.vertices[19].z+geometry.vertices[14].z+geometry.vertices[18].z)/5),                            
+        //5
+        new THREE.Vector3(  (geometry.vertices[5].x+geometry.vertices[18].x+geometry.vertices[4].x+geometry.vertices[8].x+geometry.vertices[9].x)/5,
+                            (geometry.vertices[5].y+geometry.vertices[18].y+geometry.vertices[4].y+geometry.vertices[8].y+geometry.vertices[9].y)/5,
+                            (geometry.vertices[5].z+geometry.vertices[18].z+geometry.vertices[4].z+geometry.vertices[8].z+geometry.vertices[9].z)/5),
+        //6
+        new THREE.Vector3(  (geometry.vertices[6].x+geometry.vertices[19].x+geometry.vertices[7].x+geometry.vertices[11].x+geometry.vertices[10].x)/5,
+                            (geometry.vertices[6].y+geometry.vertices[19].y+geometry.vertices[7].y+geometry.vertices[11].y+geometry.vertices[10].y)/5,
+                            (geometry.vertices[6].z+geometry.vertices[19].z+geometry.vertices[7].z+geometry.vertices[11].z+geometry.vertices[10].z)/5),
+        //7
+        new THREE.Vector3(  (geometry.vertices[5].x+geometry.vertices[7].x+geometry.vertices[15].x+geometry.vertices[18].x+geometry.vertices[19].x)/5,
+                            (geometry.vertices[5].y+geometry.vertices[7].y+geometry.vertices[15].y+geometry.vertices[18].y+geometry.vertices[19].y)/5,
+                            (geometry.vertices[5].z+geometry.vertices[7].z+geometry.vertices[15].z+geometry.vertices[18].z+geometry.vertices[19].z)/5),
+        //8
+        new THREE.Vector3(  (geometry.vertices[3].x+geometry.vertices[7].x+geometry.vertices[11].x+geometry.vertices[13].x+geometry.vertices[15].x)/5,
+                            (geometry.vertices[3].y+geometry.vertices[7].y+geometry.vertices[11].y+geometry.vertices[13].y+geometry.vertices[15].y)/5,
+                            (geometry.vertices[3].z+geometry.vertices[7].z+geometry.vertices[11].z+geometry.vertices[13].z+geometry.vertices[15].z)/5),
+        //9
+        new THREE.Vector3(  (geometry.vertices[2].x+geometry.vertices[3].x+geometry.vertices[10].x+geometry.vertices[11].x+geometry.vertices[17].x)/5,
+                            (geometry.vertices[2].y+geometry.vertices[3].y+geometry.vertices[10].y+geometry.vertices[11].y+geometry.vertices[17].y)/5,
+                            (geometry.vertices[2].z+geometry.vertices[3].z+geometry.vertices[10].z+geometry.vertices[11].z+geometry.vertices[17].z)/5),
+        //10
+        new THREE.Vector3(  (geometry.vertices[2].x+geometry.vertices[6].x+geometry.vertices[10].x+geometry.vertices[12].x+geometry.vertices[14].x)/5,
+                            (geometry.vertices[2].y+geometry.vertices[6].y+geometry.vertices[10].y+geometry.vertices[12].y+geometry.vertices[14].y)/5,
+                            (geometry.vertices[2].z+geometry.vertices[6].z+geometry.vertices[10].z+geometry.vertices[12].z+geometry.vertices[14].z)/5),
+        //11
+        new THREE.Vector3(  (geometry.vertices[1].x+geometry.vertices[5].x+geometry.vertices[9].x+geometry.vertices[13].x+geometry.vertices[15].x)/5,
+                            (geometry.vertices[1].y+geometry.vertices[5].y+geometry.vertices[9].y+geometry.vertices[13].y+geometry.vertices[15].y)/5,
+                            (geometry.vertices[1].z+geometry.vertices[5].z+geometry.vertices[9].z+geometry.vertices[13].z+geometry.vertices[15].z)/5),
+        //12
+        new THREE.Vector3(  (geometry.vertices[1].x+geometry.vertices[3].x+geometry.vertices[13].x+geometry.vertices[16].x+geometry.vertices[17].x)/5,
+                            (geometry.vertices[1].y+geometry.vertices[3].y+geometry.vertices[13].y+geometry.vertices[16].y+geometry.vertices[17].y)/5,
+                            (geometry.vertices[1].z+geometry.vertices[3].z+geometry.vertices[13].z+geometry.vertices[16].z+geometry.vertices[17].z)/5),
     );
 }
 
@@ -140,6 +181,10 @@ function createGeometry() {
         new THREE.Face3(13, 16, 17),        
     )
 
+    for(var i = 0; i < geometry.vertices.length; i++){
+        console.log(geometry.faces[i].a+" "+geometry.faces[i].b+" "+geometry.faces[i].c);
+    }
+    // console.log(geometry.faces[0]);
     geometry.scale(0.5,0.5,0.5);
     return geometry;
 }
