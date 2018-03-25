@@ -21,6 +21,7 @@
     <script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
     <script src="js/OrbitControls.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/reader.js"></script>
     <!-- <script src="js/ModifiedDodecahedronGeometry.js"></script> -->
     <!-- <script src="js/three.js"></script> -->
     <!-- <script src="js/ThreeInspector.js"></script> -->
@@ -36,28 +37,24 @@
         renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
         document.body.appendChild(renderer.domElement);
 
-        // var geometry = new THREE.BoxGeometry(1, 1, 1);
-        // var geometry = new ModifiedDodecahedronGeometry(5, 0);
-        // var verticesOfCube = createVerticies();
-        // var indicesOfFaces = createIndicies();
-        // var geometry = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 1, 0);
-
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
             color: 0x00ff00
-        });        
+        });
         var polyhedron = new THREE.Mesh(geometry, material);
-             
+
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
-        var wireframeMaterial = new THREE.LineBasicMaterial({color: 0xff0000});        
+        var wireframeMaterial = new THREE.LineBasicMaterial({
+            color: 0xff0000
+        });
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         scene.add(line);
 
         var params = {
             loadFile: function() {
-                document.getElementById('myInput').click();
+                document.getElementById('csvFile').click();
             }
         };
         var gui = new dat.GUI();
@@ -74,9 +71,14 @@
             controls.update();
         }
         animate();
+
+        function loadFile() {
+            console.log('lopata');
+            Upload();
+        }
     </script>
 
-    <input id="myInput" type="file" style="visibility:hidden" />
+    <input id="csvFile" type="file" onchange="loadFile()" style="visibility:hidden" />
 </body>
 
 </html>
