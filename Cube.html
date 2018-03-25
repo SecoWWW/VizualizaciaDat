@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8>
-    <title>My first three.js app</title>
+    <title>Radar plot in 3D</title>
     <style>
         body {
             margin: 0;
@@ -19,8 +19,10 @@
 <body>
     <script src="node_modules/three/build/three.min.js"></script>
     <script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
+    <script src="node_modules/d3-dsv/build/d3-dsv.min.js"></script>
+    <script src="node_modules/d3-fetch/dist/d3-fetch.min.js"></script>
     <script src="js/OrbitControls.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="js/dodecahydron.js"></script>
     <script src="js/reader.js"></script>
     <!-- <script src="js/ModifiedDodecahedronGeometry.js"></script> -->
     <!-- <script src="js/three.js"></script> -->
@@ -36,17 +38,53 @@
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
         document.body.appendChild(renderer.domElement);
-
+        //first dodecahydron
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
-            color: 0x00ff00
+            color: 0x00ff00,
+            opacity: 0.5
         });
+        material.transparent = true;
         var polyhedron = new THREE.Mesh(geometry, material);
 
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
         var wireframeMaterial = new THREE.LineBasicMaterial({
             color: 0xff0000
+        });
+
+        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
+        scene.add(line);
+        //second dodecahydron
+        var geometry = createGeometry();
+        var material = new THREE.MeshBasicMaterial({
+            color: 0x00fff0,
+            opacity: 0.5
+        });
+        material.transparent = true;
+        var polyhedron = new THREE.Mesh(geometry, material);
+
+        scene.add(polyhedron);
+        var wireframe = new THREE.WireframeGeometry(geometry);
+        var wireframeMaterial = new THREE.LineBasicMaterial({
+            color: 0xff00f0
+        });
+
+        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
+        scene.add(line);
+        //third dodecahydron
+        var geometry = createGeometry();
+        var material = new THREE.MeshBasicMaterial({
+            color: 0xEA2E19,
+            opacity: 0.5
+        });
+        material.transparent = true;
+        var polyhedron = new THREE.Mesh(geometry, material);
+
+        scene.add(polyhedron);
+        var wireframe = new THREE.WireframeGeometry(geometry);
+        var wireframeMaterial = new THREE.LineBasicMaterial({
+            color: 0x2AE70D
         });
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
@@ -76,6 +114,10 @@
             console.log('lopata');
             Upload();
         }
+
+        d3.csv("dataset/complete.csv").then(function(data) {
+            console.log(data[0]); // [{"Hello": "world"}, …]
+        });
     </script>
 
     <input id="csvFile" type="file" onchange="loadFile()" style="visibility:hidden" />

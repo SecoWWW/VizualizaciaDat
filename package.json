@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/SecoWWW/VizualizaciaDat#readme",
   "dependencies": {
+    "d3": "^5.0.0",
+    "d3-fetch": "^1.1.0",
     "dat.gui": "^0.7.1",
     "three": "^0.91.0"
   }
