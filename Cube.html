@@ -42,7 +42,7 @@
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
             color: 0x00ff00,
-            opacity: 0.5
+            opacity: 0.2
         });
         material.transparent = true;
         var polyhedron = new THREE.Mesh(geometry, material);
@@ -76,7 +76,7 @@
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
             color: 0xEA2E19,
-            opacity: 0.5
+            opacity: 1
         });
         material.transparent = true;
         var polyhedron = new THREE.Mesh(geometry, material);
@@ -109,15 +109,6 @@
             controls.update();
         }
         animate();
-
-        function loadFile() {
-            console.log('lopata');
-            Upload();
-        }
-
-        d3.csv("dataset/complete.csv").then(function(data) {
-            console.log(data[0]); // [{"Hello": "world"}, …]
-        });
     </script>
 
     <input id="csvFile" type="file" onchange="loadFile()" style="visibility:hidden" />
