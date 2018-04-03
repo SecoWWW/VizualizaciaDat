@@ -40,9 +40,10 @@
         document.body.appendChild(renderer.domElement);
         //first dodecahydron
         var geometry = createGeometry();
+        console.log(geometry);
         var material = new THREE.MeshBasicMaterial({
             color: 0x00ff00,
-            opacity: 0.2
+            opacity: 0.5
         });
         material.transparent = true;
         var polyhedron = new THREE.Mesh(geometry, material);
@@ -72,11 +73,11 @@
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         scene.add(line);
-        //third dodecahydron
+        // third dodecahydron
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
             color: 0xEA2E19,
-            opacity: 1
+            opacity: 0.5
         });
         material.transparent = true;
         var polyhedron = new THREE.Mesh(geometry, material);
@@ -89,6 +90,9 @@
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         scene.add(line);
+        // //
+
+        console.log(scene);
 
         var params = {
             loadFile: function() {

@@ -33,8 +33,11 @@
 // }
 
 function loadFile() {
-    console.log('lopata');
-    d3.csv("dataset/complete.csv").then(function(data) {
+    var path = document.getElementById('csvFile').files[0];
+
+    console.log(document.getElementById('csvFile'));
+    console.log(path);
+    d3.csv(path).then(function(data) {
         console.log(data[0]); // [{"Hello": "world"}, …]
     });
 }
