@@ -27,7 +27,7 @@ function createGeometry() {
         new THREE.Vector3(-theta, -reverse, 0) //19
     );
 
-    newVertices(geometry);
+    centerOfFaces(geometry);
 
     geometry.faces.push(
         //first face        
@@ -113,7 +113,7 @@ function createGeometry() {
     return geometry;
 }
 
-function newVertices(geometry) {
+function centerOfFaces(geometry) {
     geometry.vertices.push(
         //1
         new THREE.Vector3((geometry.vertices[0].x + geometry.vertices[2].x + geometry.vertices[12].x + geometry.vertices[16].x + geometry.vertices[17].x) / 5,

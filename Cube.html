@@ -23,6 +23,7 @@
     <script src="node_modules/d3-fetch/dist/d3-fetch.min.js"></script>
     <script src="js/OrbitControls.js"></script>
     <script src="js/dodecahydron.js"></script>
+    <script src="js/axes.js"></script>
     <script src="js/reader.js"></script>
     <!-- <script src="js/ModifiedDodecahedronGeometry.js"></script> -->
     <!-- <script src="js/three.js"></script> -->
@@ -38,6 +39,8 @@
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
         document.body.appendChild(renderer.domElement);
+        //axes
+        createAxes(scene);
         //first dodecahydron
         var geometry = createGeometry();
         console.log(geometry);
@@ -51,7 +54,7 @@
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
         var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0xff0000
+            color: 0x00ff00
         });
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
@@ -59,7 +62,7 @@
         //second dodecahydron
         var geometry = createGeometry();
         var material = new THREE.MeshBasicMaterial({
-            color: 0x00fff0,
+            color: 0x0000ff,
             opacity: 0.5
         });
         material.transparent = true;
@@ -68,7 +71,7 @@
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
         var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0xff00f0
+            color: 0x0000ff
         });
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
@@ -85,7 +88,7 @@
         scene.add(polyhedron);
         var wireframe = new THREE.WireframeGeometry(geometry);
         var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0x2AE70D
+            color: 0xEA2E19
         });
 
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
@@ -115,7 +118,7 @@
         animate();
     </script>
 
-    <input id="csvFile" type="file" onchange="loadFile()" style="visibility:hidden" />
+    <input id="csvFile" onclick="loadFile()" style="visibility:hidden" />
 </body>
 
 </html>

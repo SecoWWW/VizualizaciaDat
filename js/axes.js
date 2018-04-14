@@ -1,11 +1,11 @@
-function createGeometry() {
+function createAxes(scene) {
     var theta = (1 + Math.sqrt(5)) / 2;
     var reverse = 1 / theta;
 
     var axes = new THREE.Geometry();
     var verticies = [];
 
-    geometry.vertices.push(
+    axes.vertices.push(
         new THREE.Vector3(1, 1, 1), //0
         new THREE.Vector3(1, 1, -1), //1
         new THREE.Vector3(1, -1, 1), //2
@@ -25,12 +25,17 @@ function createGeometry() {
         new THREE.Vector3(theta, reverse, 0), //16
         new THREE.Vector3(theta, -reverse, 0), //17
         new THREE.Vector3(-theta, reverse, 0), //18
-        new THREE.Vector3(-theta, -reverse, 0) //19
+        new THREE.Vector3(-theta, -reverse, 0), //19        
     );
 
-    newVertices(geometry);
+    centerOfFaces(axes);
+    axes.vertices.push(
+        new THREE.Vector3(0, 0, 0)
+    );
 
-    geometry.faces.push(
+
+
+    axes.faces.push(
         //first face        
         new THREE.Face3(0, 12, 20),
         new THREE.Face3(12, 2, 20),
@@ -105,11 +110,64 @@ function createGeometry() {
         new THREE.Face3(17, 3, 31),
     )
 
-    geometry.faces.forEach((element, index, arr) => {
+    axes.faces.forEach((element, index, arr) => {
         if (index % 5 == 1) {
-            scaleCenterVerticies(geometry, element.c, element.a, element.b, element.c);
+            scaleAxes(axes, element.c, element.a, element.b, element.c);
         }
     });
-    geometry.scale(0.5, 0.5, 0.5);
-    return geometry;
+
+    addAxes(scene, axes);
+    addText(scene, axes);
+
 }
+
+function addAxes(scene, axes) {
+    var material = new THREE.LineBasicMaterial({ color: 0xffffff });
+    for (var i = 20; i < 32; i++) {
+        var geometry = new THREE.Geometry();
+        geometry.vertices.push(axes.vertices[32]);
+        geometry.vertices.push(axes.vertices[i]);
+        var line = new THREE.Line(geometry, material);
+        scene.add(line);
+    }
+}
+
+function addText(scene, axes) {
+    console.log('function');
+    var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    var loader = new THREE.FontLoader();
+    loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+        for (var i = 20; i < 32; i++) {
+            var geometry = new THREE.TextGeometry('Text', {
+                font: font,
+                size: 0.15,
+                height: 0.05,                              
+            });            
+            var text = new THREE.Mesh(geometry, material);
+            text.position.x = axes.vertices[i].x;
+            text.position.y = axes.vertices[i].y;
+            text.position.z = axes.vertices[i].z;
+            scene.add(text);            
+        }
+    });
+    
+}
+
+function scaleAxes(axes, center, vertice1, vertice2, vertice3) {
+    var u = new THREE.Vector3(
+        axes.vertices[vertice1].x - axes.vertices[vertice2].x,
+        axes.vertices[vertice1].y - axes.vertices[vertice2].y,
+        axes.vertices[vertice1].z - axes.vertices[vertice2].z
+    );
+    var v = new THREE.Vector3(
+        axes.vertices[vertice2].x - axes.vertices[vertice3].x,
+        axes.vertices[vertice2].y - axes.vertices[vertice3].y,
+        axes.vertices[vertice2].z - axes.vertices[vertice3].z
+    );
+    var normal = new THREE.Vector3(
+        (u.y * v.z) - (u.z * v.y),
+        (u.z * v.x) - (u.x * v.z),
+        (u.x * v.y) - (u.y * v.x)
+    );
+    axes.vertices[center].addScaledVector(normal, 2);
+};
