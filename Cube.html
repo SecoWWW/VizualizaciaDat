@@ -94,13 +94,15 @@
         var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         scene.add(line);
         // //
-
-        console.log(scene);
+        
 
         var params = {
             loadFile: function() {
                 document.getElementById('csvFile').click();
-            }
+            },
+            resetCamera: function(camera) {
+                document.getElementById('resetCamera').click();
+            }                                    
         };
         var gui = new dat.GUI();
         gui.add(params, 'loadFile').name('Load CSV file');
@@ -118,7 +120,7 @@
         animate();
     </script>
 
-    <input id="csvFile" onclick="loadFile()" style="visibility:hidden" />
+    <input id="csvFile" onclick="loadFile()" style="visibility:hidden" />    
 </body>
 
 </html>

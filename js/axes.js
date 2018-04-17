@@ -108,13 +108,13 @@ function createAxes(scene) {
         new THREE.Face3(1, 16, 31),
         new THREE.Face3(16, 17, 31),
         new THREE.Face3(17, 3, 31),
-    )
+    );
 
     axes.faces.forEach((element, index, arr) => {
-        if (index % 5 == 1) {
+        if (index % 5 == 1) {                      
             scaleAxes(axes, element.c, element.a, element.b, element.c);
         }
-    });
+    });    
 
     addAxes(scene, axes);
     addText(scene, axes);
@@ -142,7 +142,7 @@ function addText(scene, axes) {
                 size: 0.15,
                 height: 0.05,                              
             });            
-            var text = new THREE.Mesh(geometry, material);
+            var text = new THREE.Mesh(geometry, material);            
             text.position.x = axes.vertices[i].x;
             text.position.y = axes.vertices[i].y;
             text.position.z = axes.vertices[i].z;
@@ -154,17 +154,118 @@ function addText(scene, axes) {
 
 function addScaleDots(scene, axes){
     var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    for (var i = 20; i < 32; i++){
-        var geometry = new THREE.SphereGeometry( 0.025, 32, 32 );        
-        var sphere = new THREE.Mesh(geometry, material);
-        sphere.position.x = axes.vertices[i].x;
-        sphere.position.y = axes.vertices[i].y;
-        sphere.position.z = axes.vertices[i].z;      
-        scene.add(sphere);
+    for (var i = 20; i < 32; i++){                          
+        var normal = normalVector(
+            axes.vertices[axes.faces[(i-20)*5].a],
+            axes.vertices[axes.faces[(i-20)*5].b],
+            getMiddle(i-20, axes)
+        );                  
+        scene.add(sphere);        
+        for (var j = 0; j <= 10; j++){
+            var geometry = new THREE.SphereGeometry( 0.025, 32, 32 );        
+            var sphere = new THREE.Mesh(geometry, material); 
+            var middle = getMiddle(i-20, axes);           
+            middle.addScaledVector(normal, (j/10)*1.75 );
+            sphere.position.x = middle.x;
+            sphere.position.y = middle.y;
+            sphere.position.z = middle.z;
+            scene.add(sphere);
+        }        
     }
 }
 
 function scaleAxes(axes, center, vertice1, vertice2, vertice3) {
-    var normal = normalVector(axes.vertices[vertice1],axes.vertices[vertice2],axes.vertices[vertice3]);
+    var normal = normalVector(axes.vertices[vertice1],axes.vertices[vertice2],axes.vertices[vertice3]);    
     axes.vertices[center].addScaledVector(normal, 2);
 };
+
+function getMiddle(faceNumber, geometry){
+    var middlePoint;
+    switch(faceNumber){
+        case 0:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[0].x + geometry.vertices[2].x + geometry.vertices[12].x + geometry.vertices[16].x + geometry.vertices[17].x) / 5,
+                (geometry.vertices[0].y + geometry.vertices[2].y + geometry.vertices[12].y + geometry.vertices[16].y + geometry.vertices[17].y) / 5,
+                (geometry.vertices[0].z + geometry.vertices[2].z + geometry.vertices[12].z + geometry.vertices[16].z + geometry.vertices[17].z) / 5
+            );
+            break;
+        case 1:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[0].x + geometry.vertices[8].x + geometry.vertices[9].x + geometry.vertices[1].x + geometry.vertices[16].x) / 5,
+                (geometry.vertices[0].y + geometry.vertices[8].y + geometry.vertices[9].y + geometry.vertices[1].y + geometry.vertices[16].y) / 5,
+                (geometry.vertices[0].z + geometry.vertices[8].z + geometry.vertices[9].z + geometry.vertices[1].z + geometry.vertices[16].z) / 5
+            );
+            break;
+        case 2:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[0].x + geometry.vertices[8].x + geometry.vertices[4].x + geometry.vertices[12].x + geometry.vertices[14].x) / 5,
+                (geometry.vertices[0].y + geometry.vertices[8].y + geometry.vertices[4].y + geometry.vertices[12].y + geometry.vertices[14].y) / 5,
+                (geometry.vertices[0].z + geometry.vertices[8].z + geometry.vertices[4].z + geometry.vertices[12].z + geometry.vertices[14].z) / 5
+            );
+            break;
+        case 3:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[4].x + geometry.vertices[6].x + geometry.vertices[19].x + geometry.vertices[14].x + geometry.vertices[18].x) / 5,
+                (geometry.vertices[4].y + geometry.vertices[6].y + geometry.vertices[19].y + geometry.vertices[14].y + geometry.vertices[18].y) / 5,
+                (geometry.vertices[4].z + geometry.vertices[6].z + geometry.vertices[19].z + geometry.vertices[14].z + geometry.vertices[18].z) / 5
+            );
+            break;
+        case 4:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[5].x + geometry.vertices[18].x + geometry.vertices[4].x + geometry.vertices[8].x + geometry.vertices[9].x) / 5,
+                (geometry.vertices[5].y + geometry.vertices[18].y + geometry.vertices[4].y + geometry.vertices[8].y + geometry.vertices[9].y) / 5,
+                (geometry.vertices[5].z + geometry.vertices[18].z + geometry.vertices[4].z + geometry.vertices[8].z + geometry.vertices[9].z) / 5
+            );
+            break;
+        case 5:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[6].x + geometry.vertices[19].x + geometry.vertices[7].x + geometry.vertices[11].x + geometry.vertices[10].x) / 5,
+                (geometry.vertices[6].y + geometry.vertices[19].y + geometry.vertices[7].y + geometry.vertices[11].y + geometry.vertices[10].y) / 5,
+                (geometry.vertices[6].z + geometry.vertices[19].z + geometry.vertices[7].z + geometry.vertices[11].z + geometry.vertices[10].z) / 5
+            );
+            break;
+        case 6:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[5].x + geometry.vertices[7].x + geometry.vertices[15].x + geometry.vertices[18].x + geometry.vertices[19].x) / 5,
+                (geometry.vertices[5].y + geometry.vertices[7].y + geometry.vertices[15].y + geometry.vertices[18].y + geometry.vertices[19].y) / 5,
+                (geometry.vertices[5].z + geometry.vertices[7].z + geometry.vertices[15].z + geometry.vertices[18].z + geometry.vertices[19].z) / 5
+            );
+            break;
+        case 7:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[3].x + geometry.vertices[7].x + geometry.vertices[11].x + geometry.vertices[13].x + geometry.vertices[15].x) / 5,
+                (geometry.vertices[3].y + geometry.vertices[7].y + geometry.vertices[11].y + geometry.vertices[13].y + geometry.vertices[15].y) / 5,
+                (geometry.vertices[3].z + geometry.vertices[7].z + geometry.vertices[11].z + geometry.vertices[13].z + geometry.vertices[15].z) / 5
+            );
+            break;
+        case 8:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[2].x + geometry.vertices[3].x + geometry.vertices[10].x + geometry.vertices[11].x + geometry.vertices[17].x) / 5,
+                (geometry.vertices[2].y + geometry.vertices[3].y + geometry.vertices[10].y + geometry.vertices[11].y + geometry.vertices[17].y) / 5,
+                (geometry.vertices[2].z + geometry.vertices[3].z + geometry.vertices[10].z + geometry.vertices[11].z + geometry.vertices[17].z) / 5
+            );
+            break;
+        case 9:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[2].x + geometry.vertices[6].x + geometry.vertices[10].x + geometry.vertices[12].x + geometry.vertices[14].x) / 5,
+                (geometry.vertices[2].y + geometry.vertices[6].y + geometry.vertices[10].y + geometry.vertices[12].y + geometry.vertices[14].y) / 5,
+                (geometry.vertices[2].z + geometry.vertices[6].z + geometry.vertices[10].z + geometry.vertices[12].z + geometry.vertices[14].z) / 5
+            );
+            break;
+        case 10:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[1].x + geometry.vertices[5].x + geometry.vertices[9].x + geometry.vertices[13].x + geometry.vertices[15].x) / 5,
+                (geometry.vertices[1].y + geometry.vertices[5].y + geometry.vertices[9].y + geometry.vertices[13].y + geometry.vertices[15].y) / 5,
+                (geometry.vertices[1].z + geometry.vertices[5].z + geometry.vertices[9].z + geometry.vertices[13].z + geometry.vertices[15].z) / 5
+            );
+            break;
+        case 11:
+            middlePoint = new THREE.Vector3(
+                (geometry.vertices[1].x + geometry.vertices[3].x + geometry.vertices[13].x + geometry.vertices[16].x + geometry.vertices[17].x) / 5,
+                (geometry.vertices[1].y + geometry.vertices[3].y + geometry.vertices[13].y + geometry.vertices[16].y + geometry.vertices[17].y) / 5,
+                (geometry.vertices[1].z + geometry.vertices[3].z + geometry.vertices[13].z + geometry.vertices[16].z + geometry.vertices[17].z) / 5
+            );
+            break;
+        }
+    return middlePoint;
+}
