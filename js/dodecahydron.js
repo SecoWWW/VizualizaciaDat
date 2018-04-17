@@ -27,6 +27,8 @@ function createGeometry() {
         new THREE.Vector3(-theta, -reverse, 0) //19
     );
 
+    
+
     centerOfFaces(geometry);
 
     geometry.faces.push(
@@ -108,8 +110,13 @@ function createGeometry() {
         if (index % 5 == 1) {
             scaleCenterVerticies(geometry, element.c, element.a, element.b, element.c);
         }
-    });
-    geometry.scale(0.5, 0.5, 0.5);
+    });    
+    for (var i = 0; i < 20; i++) {
+        geometry.vertices[i].x *= 0.5;
+        geometry.vertices[i].y *= 0.5;
+        geometry.vertices[i].z *= 0.5;
+    }
+
     return geometry;
 }
 
@@ -166,13 +173,22 @@ function centerOfFaces(geometry) {
     );
 }
 
-function scaleCenterVerticies(geometry, center, vertice1, vertice2, vertice3) {
-    var u = new THREE.Vector3(geometry.vertices[vertice1].x - geometry.vertices[vertice2].x,
-        geometry.vertices[vertice1].y - geometry.vertices[vertice2].y,
-        geometry.vertices[vertice1].z - geometry.vertices[vertice2].z);
-    var v = new THREE.Vector3(geometry.vertices[vertice2].x - geometry.vertices[vertice3].x,
-        geometry.vertices[vertice2].y - geometry.vertices[vertice3].y,
-        geometry.vertices[vertice2].z - geometry.vertices[vertice3].z);
-    var normal = new THREE.Vector3((u.y * v.z) - (u.z * v.y), (u.z * v.x) - (u.x * v.z), (u.x * v.y) - (u.y * v.x));
-    geometry.vertices[center].addScaledVector(normal, Math.random() * 5);
+function scaleCenterVerticies(geometry, center, vertice1, vertice2, vertice3) {    
+    var normal = normalVector(geometry.vertices[vertice1],geometry.vertices[vertice2],geometry.vertices[vertice3]);
+    geometry.vertices[center].addScaledVector(normal, Math.random() * 1.75);
+}
+
+function normalVector(vertice1, vertice2, vertice3) {
+    var u = new THREE.Vector3(
+        vertice1.x - vertice2.x,
+        vertice1.y - vertice2.y,
+        vertice1.z - vertice2.z);
+    var v = new THREE.Vector3(
+        vertice2.x - vertice3.x,
+        vertice2.y - vertice3.y,
+        vertice2.z - vertice3.z);
+    return new THREE.Vector3(
+        (u.y * v.z) - (u.z * v.y), 
+        (u.z * v.x) - (u.x * v.z), 
+        (u.x * v.y) - (u.y * v.x));
 }

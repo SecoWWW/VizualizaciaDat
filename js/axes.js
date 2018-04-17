@@ -118,7 +118,7 @@ function createAxes(scene) {
 
     addAxes(scene, axes);
     addText(scene, axes);
-
+    addScaleDots(scene, axes);
 }
 
 function addAxes(scene, axes) {
@@ -132,8 +132,7 @@ function addAxes(scene, axes) {
     }
 }
 
-function addText(scene, axes) {
-    console.log('function');
+function addText(scene, axes) {    
     var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
     var loader = new THREE.FontLoader();
     loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function (font) {
@@ -153,21 +152,19 @@ function addText(scene, axes) {
     
 }
 
+function addScaleDots(scene, axes){
+    var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    for (var i = 20; i < 32; i++){
+        var geometry = new THREE.SphereGeometry( 0.025, 32, 32 );        
+        var sphere = new THREE.Mesh(geometry, material);
+        sphere.position.x = axes.vertices[i].x;
+        sphere.position.y = axes.vertices[i].y;
+        sphere.position.z = axes.vertices[i].z;      
+        scene.add(sphere);
+    }
+}
+
 function scaleAxes(axes, center, vertice1, vertice2, vertice3) {
-    var u = new THREE.Vector3(
-        axes.vertices[vertice1].x - axes.vertices[vertice2].x,
-        axes.vertices[vertice1].y - axes.vertices[vertice2].y,
-        axes.vertices[vertice1].z - axes.vertices[vertice2].z
-    );
-    var v = new THREE.Vector3(
-        axes.vertices[vertice2].x - axes.vertices[vertice3].x,
-        axes.vertices[vertice2].y - axes.vertices[vertice3].y,
-        axes.vertices[vertice2].z - axes.vertices[vertice3].z
-    );
-    var normal = new THREE.Vector3(
-        (u.y * v.z) - (u.z * v.y),
-        (u.z * v.x) - (u.x * v.z),
-        (u.x * v.y) - (u.y * v.x)
-    );
+    var normal = normalVector(axes.vertices[vertice1],axes.vertices[vertice2],axes.vertices[vertice3]);
     axes.vertices[center].addScaledVector(normal, 2);
 };
