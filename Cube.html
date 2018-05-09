@@ -25,6 +25,7 @@
     <script src="js/dodecahydron.js"></script>
     <script src="js/axes.js"></script>
     <script src="js/reader.js"></script>
+    <script src="js/addFunctions.js"></script>
     <!-- <script src="js/ModifiedDodecahedronGeometry.js"></script> -->
     <!-- <script src="js/three.js"></script> -->
     <!-- <script src="js/ThreeInspector.js"></script> -->
@@ -33,9 +34,9 @@
 
     <script>
         var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        var original_position = camera.position;        
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);                      
         var players = [];
+        var next_position = new THREE.Vector3(0, 0, 0);
         
         // console.log(camera);
         var controls = new THREE.OrbitControls(camera);
@@ -68,6 +69,11 @@
 
         // var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         // scene.add(line);
+
+        // next_position.x += 10;        
+
+        // createAxes(scene);
+         
         //second dodecahydron
         // var geometry = createGeometry();
         // var material = new THREE.MeshBasicMaterial({
@@ -111,15 +117,22 @@
             },
             resetCamera: function(camera) {
                 document.getElementById('resetCamera').click();
-            }                                    
+            },
+            showData: function() {
+                document.getElementById('showData').click();
+            },
+            clearScreen: function() {
+                document.getElementById('clearScreen').click();
+            }                                           
         };
         var gui = new dat.GUI();
         gui.add(params, 'loadFile').name('Load CSV file');
         gui.add(params, 'resetCamera').name('Reset camera position');
+        gui.add(params, 'showData').name('Show loaded data');
+        gui.add(params, 'clearScreen').name('Clear shown data');
 
-
-        camera.position.z = 5;
-        original_position = camera.position;
+        camera.position.y = 0;
+        camera.position.z = 5;        
         controls.update();
 
         function animate() {
@@ -131,20 +144,31 @@
         animate();
 
         function resetCamera() {
-            camera.position.x = original_position.x;
-            camera.position.y = original_position.y;
-            camera.position.z = original_position.z;
-
-            camera.lookAt.x = 0;
-            camera.lookAt.y = 0;
-            camera.lookAt.z = 0;
-
-            camera.up = new THREE.Vector3(0,1,0);            
+            controls.reset();
+            camera.position.y = 0;
+            camera.position.z = 5;
         }
     </script>
 
     <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv" style="visibility:hidden" />
     <input id="resetCamera" onclick="resetCamera()" style="visibility:hidden" />
+    <input id="showData" onclick="showData()" style="visibility:hidden" />
+    <input id="clearScreen" onclick="clearScreen()" style="visibility:hidden" />
+
+    <div>
+        Potential: <input type="checkbox" id="potentialId" checked="checked">
+        Pace: <input type="checkbox" id="paceId" checked="checked">
+        Shooting: <input type="checkbox" id="shootingId" checked="checked"><br>
+        Passing: <input type="checkbox" id="passingId" checked="checked">
+        Dribling: <input type="checkbox" id="driblingId" checked="checked">
+        Defending: <input type="checkbox" id="defendingId" checked="checked"><br>
+        Physical: <input type="checkbox" id="physicalId" checked="checked">
+        Agility: <input type="checkbox" id="agilityId" checked="checked">
+        Reactions: <input type="checkbox" id="reactionsId" checked="checked"><br>
+        Stamina: <input type="checkbox" id="staminaId" checked="checked">
+        Strength: <input type="checkbox" id="strengthId" checked="checked">
+        Marking: <input type="checkbox" id="markingId" checked="checked">
+    </div>
 </body>
 
 </html>

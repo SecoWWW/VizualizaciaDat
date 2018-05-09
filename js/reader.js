@@ -25,8 +25,9 @@ function handleFiles(files) {
   function processData(csv) {
       var allTextLines = csv.split(/\r\n|\n/);
     //   console.log(allTextLines);
+    players = [];
          
-      for (var i=1; i<101; i++) {
+      for (var i=1; i<11; i++) {
             var data = allTextLines[i].split(',');
             var player = {};
             player.ID = data[0];
@@ -45,8 +46,9 @@ function handleFiles(files) {
             player.strength = data[51];
             player.marking = data[59];
 
-            players.push(player);
+            players.push(player);            
       }      
+      console.log(players);
   }
 
   function errorHandler(evt) {

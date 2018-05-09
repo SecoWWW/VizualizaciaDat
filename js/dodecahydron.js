@@ -106,16 +106,23 @@ function createGeometry(player) {
         new THREE.Face3(16, 17, 31),
         new THREE.Face3(17, 3, 31),
     )
-
+    var parameterIndex = 0;
     geometry.faces.forEach((element, index, arr) => {
         if (index % 5 == 1) {
-            scaleCenterVerticies(geometry, element.c, element.a, element.b, element.c);
+            var parameter = parameterValue(player ,parameterIndex++);
+            scaleCenterVerticies(geometry, element.c, element.a, element.b, element.c, parameter);
         }
     });    
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 32; i++) {
         geometry.vertices[i].x *= 0.5;
         geometry.vertices[i].y *= 0.5;
         geometry.vertices[i].z *= 0.5;
+    }
+
+    for (var i = 0; i < geometry.vertices.length; i++){
+        geometry.vertices[i].x += next_position.x;
+        geometry.vertices[i].y += next_position.y;
+        geometry.vertices[i].z += next_position.z;
     }
 
     return geometry;
@@ -138,9 +145,9 @@ function centerOfFaces(geometry) {
     );
 }
 
-function scaleCenterVerticies(geometry, center, vertice1, vertice2, vertice3) {    
-    var normal = normalVector(geometry.vertices[vertice1],geometry.vertices[vertice2],geometry.vertices[vertice3]);
-    geometry.vertices[center].addScaledVector(normal, Math.random() * 1.75);
+function scaleCenterVerticies(geometry, center, vertice1, vertice2, vertice3, parameter) {    
+    var normal = normalVector(geometry.vertices[vertice1],geometry.vertices[vertice2],geometry.vertices[vertice3]);    
+    geometry.vertices[center].addScaledVector(normal, parameter*5);
 }
 
 function normalVector(vertice1, vertice2, vertice3) {
@@ -156,4 +163,71 @@ function normalVector(vertice1, vertice2, vertice3) {
         (u.y * v.z) - (u.z * v.y), 
         (u.z * v.x) - (u.x * v.z), 
         (u.x * v.y) - (u.y * v.x));
+}
+
+function parameterValue(player, index){
+    var returnValue;
+    switch(index){
+        case 0:
+            if (document.getElementById('potentialId').checked){
+                returnValue = player.potential/100;
+            } else {returnValue = 0;}
+            break;
+        case 1:
+            if (document.getElementById('paceId').checked){
+                returnValue = player.pace/100;
+            } else {returnValue = 0;}
+            break;
+        case 2:
+            if (document.getElementById('shootingId').checked){
+                returnValue = player.shooting/100;
+            } else {returnValue = 0;}
+            break;
+        case 3:
+            if (document.getElementById('passingId').checked){                
+                returnValue = player.passing/100;
+            } else {returnValue = 0;}
+            break;
+        case 4:
+            if (document.getElementById('driblingId').checked){
+                returnValue = player.dribling/100;
+            } else {returnValue = 0;}
+            break;
+        case 5:
+            if (document.getElementById('defendingId').checked){
+                returnValue = player.defending/100;
+            } else {returnValue = 0;}            
+            break;
+        case 6:
+            if (document.getElementById('physicalId').checked){
+                returnValue = player.physical/100;
+            } else {returnValue = 0;}
+            break;
+        case 7:        
+            if (document.getElementById('agilityId').checked){
+                returnValue =  player.agility/100;
+            } else {returnValue = 0;}
+            break;
+        case 8:     
+            if (document.getElementById('reactionsId').checked){       
+                returnValue = player.reactions/100;
+            } else {returnValue = 0;}
+            break;
+        case 9:
+            if (document.getElementById('staminaId').checked){
+                returnValue = player.stamina/100;
+            } else {returnValue = 0;}
+            break;
+        case 10:
+            if (document.getElementById('strengthId').checked){
+                returnValue = player.strength/100;
+            } else {returnValue = 0;}
+            break;
+        case 11:
+            if (document.getElementById('markingId').checked){
+                returnValue = player.marking/100;
+            } else {returnValue = 0;}
+            break;
+    }
+    return returnValue;
 }

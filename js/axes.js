@@ -1,8 +1,9 @@
-function createAxes(scene) {
+function createAxes() {
     var theta = (1 + Math.sqrt(5)) / 2;
     var reverse = 1 / theta;
 
     var axes = new THREE.Geometry();    
+    var group = new THREE.Group();
 
     axes.vertices.push(
         new THREE.Vector3(1, 1, 1), //0
@@ -113,30 +114,41 @@ function createAxes(scene) {
         if (index % 5 == 1) {                      
             scaleAxes(axes, element.c, element.a, element.b, element.c);
         }
-    });    
+    });   
+    
+    for (var i = 0; i < 32; i++) {
+        axes.vertices[i].x *= 0.5;
+        axes.vertices[i].y *= 0.5;
+        axes.vertices[i].z *= 0.5;
+    }
 
-    addAxes(scene, axes);
-    addText(scene, axes);
-    addScaleDots(scene, axes);
+    // addAxes(scene, axes, group);  
+    if (next_position.x == 0 && next_position.y == 0 && next_position.z == 0){        
+        addText(scene, axes, group);
+    }
+    addScaleDots(scene, axes, group);        
+    movePosition(group);
+    scene.add(group);    
 }
 
-function addAxes(scene, axes) {
+function addAxes(scene, axes, group) {    
     var material = new THREE.LineBasicMaterial({ color: 0xffffff });
     for (var i = 20; i < 32; i++) {
         var geometry = new THREE.Geometry();
         geometry.vertices.push(axes.vertices[32]);
         geometry.vertices.push(axes.vertices[i]);
-        var line = new THREE.Line(geometry, material);
-        scene.add(line);
+        var line = new THREE.Line(geometry, material);        
+        group.add(line);
     }
 }
 
-function addText(scene, axes) {    
+function addText(scene, axes, group) {    
     var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
     var loader = new THREE.FontLoader();
     loader.load('node_modules/three/examples/fonts/helvetiker_regular.typeface.json', function (font) {
         for (var i = 20; i < 32; i++) {
-            var geometry = new THREE.TextGeometry('Text', {
+            var parameterText = getParameterText(i-20);
+            var geometry = new THREE.TextGeometry(parameterText, {
                 font: font,
                 size: 0.15,
                 height: 0.05,                              
@@ -144,38 +156,40 @@ function addText(scene, axes) {
             var text = new THREE.Mesh(geometry, material);            
             text.position.x = axes.vertices[i].x;
             text.position.y = axes.vertices[i].y;
-            text.position.z = axes.vertices[i].z;
-            scene.add(text);            
+            text.position.z = axes.vertices[i].z; 
+            // text.position.x += next_position.x;
+            // text.position.y += next_position.y;
+            // text.position.z += next_position.z;
+            group.add(text);           
         }
     });
     
 }
 
-function addScaleDots(scene, axes){
+function addScaleDots(scene, axes, group){    
     var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
     for (var i = 20; i < 32; i++){                          
         var normal = normalVector(
             axes.vertices[axes.faces[(i-20)*5].a],
             axes.vertices[axes.faces[(i-20)*5].b],
             getMiddle(i-20, axes)
-        );                  
-        scene.add(sphere);        
+        );                                      
         for (var j = 0; j <= 10; j++){
             var geometry = new THREE.SphereGeometry( 0.025, 32, 32 );        
             var sphere = new THREE.Mesh(geometry, material); 
             var middle = getMiddle(i-20, axes);           
-            middle.addScaledVector(normal, (j/10)*1.75 );
+            middle.addScaledVector(normal, (j/10)*10 );
             sphere.position.x = middle.x;
             sphere.position.y = middle.y;
-            sphere.position.z = middle.z;
-            scene.add(sphere);
+            sphere.position.z = middle.z;            
+            group.add(sphere);
         }        
     }
 }
 
 function scaleAxes(axes, center, vertice1, vertice2, vertice3) {
-    var normal = normalVector(axes.vertices[vertice1],axes.vertices[vertice2],axes.vertices[vertice3]);    
-    axes.vertices[center].addScaledVector(normal, 2);
+    var normal = normalVector(axes.vertices[vertice1],axes.vertices[vertice2],axes.vertices[vertice3]);      
+    axes.vertices[center].addScaledVector(normal, 5);
 };
 
 function getMiddle(faceNumber, geometry){
@@ -267,4 +281,55 @@ function getMiddle(faceNumber, geometry){
             break;
         }
     return middlePoint;
+}
+
+function movePosition(group){    
+    for (var i = 0; i < group.children.length; i++){
+        group.children[i].position.x += next_position.x;
+        group.children[i].position.y += next_position.y;
+        group.children[i].position.z += next_position.z;        
+    }
+}
+
+function getParameterText(index){
+    var text = "";
+    switch(index){
+        case 0:
+            text = 'potential';
+            break;
+        case 1:
+            text = 'pace';
+            break;
+        case 2:
+            text = 'shooting';
+            break;
+        case 3:
+            text = 'passing';
+            break;
+        case 4:
+            text = 'dribling';
+            break;
+        case 5:
+            text = 'defending';
+            break;
+        case 6:
+            text = 'physical';
+            break;
+        case 7:
+            text = 'agility';
+            break;
+        case 8:
+            text = 'reaction';
+            break;
+        case 9:
+            text = 'stamina';
+            break;
+        case 10:
+            text = 'strength';
+            break;
+        case 11:
+            text = 'marking';
+            break;
+    }
+    return text;
 }
