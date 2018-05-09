@@ -2,8 +2,7 @@ function createAxes(scene) {
     var theta = (1 + Math.sqrt(5)) / 2;
     var reverse = 1 / theta;
 
-    var axes = new THREE.Geometry();
-    var verticies = [];
+    var axes = new THREE.Geometry();    
 
     axes.vertices.push(
         new THREE.Vector3(1, 1, 1), //0

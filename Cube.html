@@ -34,71 +34,80 @@
     <script>
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var original_position = camera.position;        
+        var players = [];
+        
+        // console.log(camera);
         var controls = new THREE.OrbitControls(camera);
 
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8);
-        document.body.appendChild(renderer.domElement);
+        document.body.appendChild(renderer.domElement);        
+
+        // loadFile(scene);
+
         //axes
-        createAxes(scene);
+        // createAxes(scene);
+
+
         //first dodecahydron
-        var geometry = createGeometry();
-        console.log(geometry);
-        var material = new THREE.MeshBasicMaterial({
-            color: 0x00ff00,
-            opacity: 0.5
-        });
-        material.transparent = true;
-        var polyhedron = new THREE.Mesh(geometry, material);
+        // var geometry = createGeometry();
+        // console.log(geometry);
+        // var material = new THREE.MeshBasicMaterial({
+        //     color: 0x00ff00,
+        //     opacity: 0.5
+        // });
+        // material.transparent = true;
+        // var polyhedron = new THREE.Mesh(geometry, material);
 
-        scene.add(polyhedron);
-        var wireframe = new THREE.WireframeGeometry(geometry);
-        var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0x00ff00
-        });
+        // scene.add(polyhedron);
+        // var wireframe = new THREE.WireframeGeometry(geometry);
+        // var wireframeMaterial = new THREE.LineBasicMaterial({
+        //     color: 0x00ff00
+        // });
 
-        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
-        scene.add(line);
+        // var line = new THREE.LineSegments(wireframe, wireframeMaterial);
+        // scene.add(line);
         //second dodecahydron
-        var geometry = createGeometry();
-        var material = new THREE.MeshBasicMaterial({
-            color: 0x0000ff,
-            opacity: 0.5
-        });
-        material.transparent = true;
-        var polyhedron = new THREE.Mesh(geometry, material);
+        // var geometry = createGeometry();
+        // var material = new THREE.MeshBasicMaterial({
+        //     color: 0x0000ff,
+        //     opacity: 0.5
+        // });
+        // material.transparent = true;
+        // var polyhedron = new THREE.Mesh(geometry, material);
 
-        scene.add(polyhedron);
-        var wireframe = new THREE.WireframeGeometry(geometry);
-        var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0x0000ff
-        });
+        // scene.add(polyhedron);
+        // var wireframe = new THREE.WireframeGeometry(geometry);
+        // var wireframeMaterial = new THREE.LineBasicMaterial({
+        //     color: 0x0000ff
+        // });
 
-        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
-        scene.add(line);
-        // third dodecahydron
-        var geometry = createGeometry();
-        var material = new THREE.MeshBasicMaterial({
-            color: 0xff0000,
-            opacity: 0.5
-        });
-        material.transparent = true;
-        var polyhedron = new THREE.Mesh(geometry, material);
+        // var line = new THREE.LineSegments(wireframe, wireframeMaterial);
+        // scene.add(line);
+        // // third dodecahydron
+        // var geometry = createGeometry();
+        // var material = new THREE.MeshBasicMaterial({
+        //     color: 0xff0000,
+        //     opacity: 0.5
+        // });
+        // material.transparent = true;
+        // var polyhedron = new THREE.Mesh(geometry, material);
 
-        scene.add(polyhedron);
-        var wireframe = new THREE.WireframeGeometry(geometry);
-        var wireframeMaterial = new THREE.LineBasicMaterial({
-            color: 0xff0000
-        });
+        // scene.add(polyhedron);
+        // var wireframe = new THREE.WireframeGeometry(geometry);
+        // var wireframeMaterial = new THREE.LineBasicMaterial({
+        //     color: 0xff0000
+        // });
 
-        var line = new THREE.LineSegments(wireframe, wireframeMaterial);
-        scene.add(line);
+        // var line = new THREE.LineSegments(wireframe, wireframeMaterial);
+        // scene.add(line);
         // //
         
 
         var params = {
             loadFile: function() {
-                document.getElementById('csvFile').click();
+                document.getElementById('csvFileInput').click();
             },
             resetCamera: function(camera) {
                 document.getElementById('resetCamera').click();
@@ -106,9 +115,11 @@
         };
         var gui = new dat.GUI();
         gui.add(params, 'loadFile').name('Load CSV file');
+        gui.add(params, 'resetCamera').name('Reset camera position');
 
 
         camera.position.z = 5;
+        original_position = camera.position;
         controls.update();
 
         function animate() {
@@ -118,9 +129,22 @@
             controls.update();
         }
         animate();
+
+        function resetCamera() {
+            camera.position.x = original_position.x;
+            camera.position.y = original_position.y;
+            camera.position.z = original_position.z;
+
+            camera.lookAt.x = 0;
+            camera.lookAt.y = 0;
+            camera.lookAt.z = 0;
+
+            camera.up = new THREE.Vector3(0,1,0);            
+        }
     </script>
 
-    <input id="csvFile" onclick="loadFile()" style="visibility:hidden" />    
+    <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv" style="visibility:hidden" />
+    <input id="resetCamera" onclick="resetCamera()" style="visibility:hidden" />
 </body>
 
 </html>

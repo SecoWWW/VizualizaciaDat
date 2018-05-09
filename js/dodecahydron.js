@@ -1,4 +1,5 @@
-function createGeometry() {
+function createGeometry(player) {
+    console.log(player);
     var theta = (1 + Math.sqrt(5)) / 2;
     var reverse = 1 / theta;
 
@@ -111,11 +112,11 @@ function createGeometry() {
             scaleCenterVerticies(geometry, element.c, element.a, element.b, element.c);
         }
     });    
-    // for (var i = 0; i < 20; i++) {
-    //     geometry.vertices[i].x *= 0.5;
-    //     geometry.vertices[i].y *= 0.5;
-    //     geometry.vertices[i].z *= 0.5;
-    // }
+    for (var i = 0; i < 20; i++) {
+        geometry.vertices[i].x *= 0.5;
+        geometry.vertices[i].y *= 0.5;
+        geometry.vertices[i].z *= 0.5;
+    }
 
     return geometry;
 }
