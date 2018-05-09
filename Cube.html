@@ -37,6 +37,7 @@
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);                      
         var players = [];
         var next_position = new THREE.Vector3(0, 0, 0);
+        var playersToShow = 4;
         
         // console.log(camera);
         var controls = new THREE.OrbitControls(camera);
@@ -109,7 +110,7 @@
         // var line = new THREE.LineSegments(wireframe, wireframeMaterial);
         // scene.add(line);
         // //
-        
+                
 
         var params = {
             loadFile: function() {
@@ -123,13 +124,17 @@
             },
             clearScreen: function() {
                 document.getElementById('clearScreen').click();
-            }                                           
+            },
+            number: 4                                        
         };
         var gui = new dat.GUI();
         gui.add(params, 'loadFile').name('Load CSV file');
         gui.add(params, 'resetCamera').name('Reset camera position');
         gui.add(params, 'showData').name('Show loaded data');
         gui.add(params, 'clearScreen').name('Clear shown data');
+        gui.add(params, 'number').min(1).max(10).step(1).onChange(function(newValue) {
+            playersToShow = newValue;
+        }).name("Number of players to show");
 
         camera.position.y = 0;
         camera.position.z = 5;        
@@ -154,7 +159,7 @@
     <input id="resetCamera" onclick="resetCamera()" style="visibility:hidden" />
     <input id="showData" onclick="showData()" style="visibility:hidden" />
     <input id="clearScreen" onclick="clearScreen()" style="visibility:hidden" />
-
+    
     <div>
         Potential: <input type="checkbox" id="potentialId" checked="checked">
         Pace: <input type="checkbox" id="paceId" checked="checked">

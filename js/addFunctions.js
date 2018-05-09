@@ -53,7 +53,7 @@ function showData() {
         return;
     }
 
-    for( var i = 0; i < 4; i++){        
+    for( var i = 0; i < playersToShow; i++){        
         addPlayer(players[i], i);        
     }
 }
